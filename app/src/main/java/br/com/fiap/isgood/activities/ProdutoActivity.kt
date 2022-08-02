@@ -1,5 +1,6 @@
 package br.com.fiap.isgood.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
@@ -33,6 +34,10 @@ class ProdutoActivity : AppCompatActivity() {
         val underlineString = SpannableString(textViewIrLoja.text);
         underlineString.setSpan(UnderlineSpan(), 0, underlineString.length, 0);
         textViewIrLoja.text = underlineString;
+        textViewIrLoja.setOnClickListener{
+            var intent = Intent(applicationContext, LojaActivity::class.java)
+            startActivity(intent)
+        }
 
         recyclerView = findViewById(R.id.recyclerViewListAvaliacoesProdutos);
         configureRecyclerView();

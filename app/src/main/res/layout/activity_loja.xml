@@ -97,7 +97,6 @@
                 android:textSize="18dp"
                 android:textColor="@color/black" />
 
-            <!--
             <androidx.fragment.app.FragmentContainerView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -105,9 +104,9 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".LocalizacaoUsuarioActivity" !!
+                tools:context=".fragments.RestauranteLocalizacaoFragment"
 
-                /> -->
+                />
 
         </LinearLayout>
         <LinearLayout

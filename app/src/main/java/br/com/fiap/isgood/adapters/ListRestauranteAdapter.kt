@@ -32,7 +32,7 @@ class ListRestauranteAdapter(private val dataSet: ArrayList<Restaurante>,private
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.nome.text = dataSet[position].nome;
-        viewHolder.endereco.text = dataSet[position].nome;
+        viewHolder.endereco.text = dataSet[position].endereco;
 
         viewHolder.itemView.setOnClickListener {
             onClickListener.onClick(dataSet[position])

@@ -30,10 +30,10 @@
             android:value="AIzaSyC5SOu65UuzCkg43WBmUfySE-1-zuD15K8" />
 
         <activity
-            android:name=".activities.LojaActivity"
+            android:name=".activities.RestauranteActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ProdutoActivity"
+            android:name=".activities.ProdutosRestauranteActivity"
             android:exported="false" />
         <activity
             android:name=".activities.BaseDrawerActivity"

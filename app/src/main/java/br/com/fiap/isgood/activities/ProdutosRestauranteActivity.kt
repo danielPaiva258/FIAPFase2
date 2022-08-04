@@ -13,29 +13,36 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
-import br.com.fiap.isgood.adapters.ListRestauranteAdapter
 import br.com.fiap.isgood.models.AvaliacaoProduto
+import br.com.fiap.isgood.models.Lanche
 import br.com.fiap.isgood.models.Restaurante
+import kotlinx.android.synthetic.main.activity_produtos_restaurante.*
 
-class ProdutoActivity : AppCompatActivity() {
+class ProdutosRestauranteActivity : AppCompatActivity() {
 
     lateinit var ratingBarProduto:RatingBar;
     lateinit var textViewIrLoja:TextView;
     lateinit  var recyclerView: RecyclerView;
+    lateinit var restaurante : Restaurante
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_produto)
+        setContentView(R.layout.activity_produtos_restaurante)
+        var idRestaurante = intent.getIntExtra("idRestaurante",99)
+        restaurante = Restaurante.getExample(idRestaurante)
+        tvNomeLoja.text = restaurante.nome
 
         ratingBarProduto = findViewById(R.id.ratingBarProduto);
-        ratingBarProduto.rating = 3F;
+        ratingBarProduto.rating = restaurante.rating.toFloat();
 
         textViewIrLoja = findViewById<TextView>(R.id.textViewIrLoja);
         val underlineString = SpannableString(textViewIrLoja.text);
         underlineString.setSpan(UnderlineSpan(), 0, underlineString.length, 0);
         textViewIrLoja.text = underlineString;
         textViewIrLoja.setOnClickListener{
-            var intent = Intent(applicationContext, LojaActivity::class.java)
+            var intent = Intent(applicationContext, RestauranteActivity::class.java)
+            intent.putExtra("idRestaurante", restaurante.id)
             startActivity(intent)
         }
 

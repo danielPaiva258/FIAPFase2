@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="nome"
-        android:textSize="15dp"/>
+        android:textSize="18dp"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/textViewEnderecoRestaurante"
         android:layout_width="match_parent"

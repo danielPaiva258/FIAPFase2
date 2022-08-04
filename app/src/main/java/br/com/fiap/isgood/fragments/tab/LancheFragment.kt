@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
-import br.com.fiap.isgood.adapters.ListRestauranteAdapter
 import br.com.fiap.isgood.models.Lanche
 
 class LancheFragment:Fragment (){
@@ -33,9 +32,9 @@ class LancheFragment:Fragment (){
     private fun configureRecyclerView() {
         recyclerView.setLayoutManager(LinearLayoutManager(getActivity()));
 
-        val lanche1 = Lanche (nome="lanche1", endereco = "lanche1")
-        val lanche2 = Lanche (nome="lanche2", endereco = "lanche2")
-        val lanche3 = Lanche (nome="lanche3", endereco = "lanche3")
+        val lanche1 = Lanche.getExemple (1) // nome="lanche1", endereco = "lanche1")
+        val lanche2 = Lanche.getExemple (2) // nome="lanche2", endereco = "lanche2")
+        val lanche3 = Lanche.getExemple (3) // nome="lanche3", endereco = "lanche3")
 
         val listLanches = ArrayList<Lanche>();
         listLanches.add(lanche1);
@@ -51,10 +50,10 @@ class LancheFragment:Fragment (){
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val nome: TextView;
-            val endereco: TextView;
+            val descricao: TextView;
             init {
                 nome = view.findViewById(R.id.textViewNomeLanche);
-                endereco = view.findViewById(R.id.textViewPrecoLanche);
+                descricao = view.findViewById(R.id.textViewDescricaoLanche);
             }
         }
 
@@ -66,7 +65,7 @@ class LancheFragment:Fragment (){
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
             viewHolder.nome.text = dataSet[position].nome;
-            viewHolder.endereco.text = dataSet[position].nome;
+            viewHolder.descricao.text = dataSet[position].descricao;
         }
 
         override fun getItemCount() = dataSet.size

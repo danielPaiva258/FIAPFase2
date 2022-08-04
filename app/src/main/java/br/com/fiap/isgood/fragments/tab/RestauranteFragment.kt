@@ -9,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
-import br.com.fiap.isgood.activities.CadastroActivity
-import br.com.fiap.isgood.activities.ProdutoActivity
+import br.com.fiap.isgood.activities.ProdutosRestauranteActivity
 import br.com.fiap.isgood.adapters.ListRestauranteAdapter
 import br.com.fiap.isgood.models.Restaurante
 
@@ -35,9 +34,9 @@ class RestauranteFragment: Fragment (){
         private fun configureRecyclerView() {
         recyclerView.setLayoutManager(LinearLayoutManager(getActivity()));
 
-        val res1 = Restaurante (nome="rest1", endereco = "end1")
-        val res2 = Restaurante (nome="rest2", endereco = "end2")
-        val res3 = Restaurante (nome="rest3", endereco = "end3")
+        val res1 = Restaurante.getExample (1) //nome="rest1", endereco = "end1")
+        val res2 = Restaurante.getExample (2) //nome="rest2", endereco = "end2")
+        val res3 = Restaurante.getExample (3) //nome="rest3", endereco = "end3")
 
         val listRestaurantes = ArrayList<Restaurante>();
         listRestaurantes.add(res1);
@@ -45,7 +44,8 @@ class RestauranteFragment: Fragment (){
         listRestaurantes.add(res3);
 
         val adapter = ListRestauranteAdapter(listRestaurantes, ListRestauranteAdapter.OnClickListener{
-            val intent = Intent(activity, ProdutoActivity::class.java)
+            val intent = Intent(activity, ProdutosRestauranteActivity::class.java)
+            intent.putExtra("idRestaurante", it.id)
             startActivity(intent)
         });
         recyclerView.adapter = adapter;

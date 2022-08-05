@@ -16,7 +16,10 @@ import br.com.fiap.isgood.R
 import br.com.fiap.isgood.models.AvaliacaoProduto
 import br.com.fiap.isgood.models.Lanche
 import br.com.fiap.isgood.models.Restaurante
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_produtos_restaurante.*
+import kotlinx.android.synthetic.main.activity_produtos_restaurante.tvNomeLoja
+import kotlinx.android.synthetic.main.activity_restaurante.*
 
 class ProdutosRestauranteActivity : AppCompatActivity() {
 
@@ -29,9 +32,11 @@ class ProdutosRestauranteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_produtos_restaurante)
+
         var idRestaurante = intent.getIntExtra("idRestaurante",99)
-        restaurante = Restaurante.getExample(idRestaurante)
+        restaurante = Restaurante.getById(idRestaurante)
         tvNomeLoja.text = restaurante.nome
+        Glide.with(this).load(restaurante.srcImageLogo).into(ivProdutoRestauranteTop)
 
         ratingBarProduto = findViewById(R.id.ratingBarProduto);
         ratingBarProduto.rating = restaurante.rating.toFloat();
@@ -41,7 +46,7 @@ class ProdutosRestauranteActivity : AppCompatActivity() {
         underlineString.setSpan(UnderlineSpan(), 0, underlineString.length, 0);
         textViewIrLoja.text = underlineString;
         textViewIrLoja.setOnClickListener{
-            var intent = Intent(applicationContext, RestauranteActivity::class.java)
+            val intent = Intent(applicationContext, RestauranteActivity::class.java)
             intent.putExtra("idRestaurante", restaurante.id)
             startActivity(intent)
         }
@@ -53,14 +58,15 @@ class ProdutosRestauranteActivity : AppCompatActivity() {
     private fun configureRecyclerView() {
         recyclerView.setLayoutManager(LinearLayoutManager(this));
 
-        val avaliacao1 = AvaliacaoProduto (nomeAvaliador  ="rest1", produto = "end1", nota = 3F, comentario = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique turpis. Donec id imperdiet lacus. Nullam turpis odio, suscipit eget egestas ac, faucibus sit amet diam. In lorem tortor.")
+        /*val avaliacao1 = AvaliacaoProduto (nomeAvaliador  ="rest1", produto = "end1", nota = 3F, comentario = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique turpis. Donec id imperdiet lacus. Nullam turpis odio, suscipit eget egestas ac, faucibus sit amet diam. In lorem tortor.")
         val avaliacao2 = AvaliacaoProduto (nomeAvaliador="rest2", produto = "end2",nota = 4F, comentario = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique turpis. Donec id imperdiet lacus. Nullam turpis odio, suscipit eget egestas ac, faucibus sit amet diam. In lorem tortor.")
         val avaliacao3 = AvaliacaoProduto (nomeAvaliador="rest3", produto = "end3",nota = 1F, comentario = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at tristique turpis. Donec id imperdiet lacus. Nullam turpis odio, suscipit eget egestas ac, faucibus sit amet diam. In lorem tortor.")
 
         val listAvaliacoes = ArrayList<AvaliacaoProduto>();
         listAvaliacoes.add(avaliacao1);
         listAvaliacoes.add(avaliacao2);
-        listAvaliacoes.add(avaliacao3);
+        listAvaliacoes.add(avaliacao3);*/
+        val listAvaliacoes = AvaliacaoProduto.getSampleArray()
 
         val adapter = ListAvaliacaoProdutoAdapter(listAvaliacoes);
         recyclerView.adapter = adapter;
@@ -89,7 +95,7 @@ class ProdutosRestauranteActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-            viewHolder.nome.text = dataSet[position].nomeAvaliador;
+            viewHolder.nome.text = dataSet[position].usuarioAvaliador.name;
             viewHolder.nota.rating = dataSet[position].nota;
             viewHolder.comentario.text = dataSet[position].comentario;
         }

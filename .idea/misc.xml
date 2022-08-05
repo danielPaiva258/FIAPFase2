@@ -29,10 +29,13 @@
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/drawable/img_vector_logo_youtube.xml" value="0.171" />
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/drawable/img_vector_star.xml" value="0.196" />
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/drawable/img_vector_star_gray.xml" value="0.196" />
+        <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/activity_login.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/activity_loja.xml" value="0.1" />
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/activity_pesquisa.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/activity_produto.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/activity_produtos_restaurante.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/activity_restaurante.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/fragment_lanche.xml" value="0.33" />
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/fragment_restaurante.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/willi/AndroidStudioProjects/FIAP/Fase02/app/src/main/res/layout/fragment_restaurante_localizacao.xml" value="0.17395833333333333" />

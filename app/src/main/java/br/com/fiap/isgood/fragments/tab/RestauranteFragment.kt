@@ -32,16 +32,18 @@ class RestauranteFragment: Fragment (){
     }
 
         private fun configureRecyclerView() {
-        recyclerView.setLayoutManager(LinearLayoutManager(getActivity()));
-
-        val res1 = Restaurante.getExample (1) //nome="rest1", endereco = "end1")
-        val res2 = Restaurante.getExample (2) //nome="rest2", endereco = "end2")
-        val res3 = Restaurante.getExample (3) //nome="rest3", endereco = "end3")
+        recyclerView.setLayoutManager(LinearLayoutManager(getActivity()))
+        /*
+        val res1 = Restaurante.getById (1) //nome="rest1", endereco = "end1")
+        val res2 = Restaurante.getById (2) //nome="rest2", endereco = "end2")
+        val res3 = Restaurante.getById (3) //nome="rest3", endereco = "end3")
 
         val listRestaurantes = ArrayList<Restaurante>();
         listRestaurantes.add(res1);
         listRestaurantes.add(res2);
-        listRestaurantes.add(res3);
+        listRestaurantes.add(res3)
+        */
+        val listRestaurantes = Restaurante.getSampleArray()
 
         val adapter = ListRestauranteAdapter(listRestaurantes, ListRestauranteAdapter.OnClickListener{
             val intent = Intent(activity, ProdutosRestauranteActivity::class.java)

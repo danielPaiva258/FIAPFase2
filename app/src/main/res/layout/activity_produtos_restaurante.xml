@@ -38,11 +38,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
+
             <RatingBar
                 android:id="@+id/ratingBarProduto"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:isIndicator="true"
                 android:numStars="5"/>
 

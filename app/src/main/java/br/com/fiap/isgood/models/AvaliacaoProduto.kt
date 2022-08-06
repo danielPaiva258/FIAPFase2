@@ -21,25 +21,79 @@ data class AvaliacaoProduto (
                     lanches[0],
                     "Lanche muito bom",
                     4.5F
-            ))
+                ))
 
             ret.add(
-                AvaliacaoProduto(2,
+                AvaliacaoProduto(
+                    2,
+                    avaliadores[0],
+                    lanches[1],
+                    "Gostoso, mas pode melhorar muito. Justo pelo preço.",
+                    3.5F
+                ))
+
+            ret.add(
+                AvaliacaoProduto(
+                    3,
+                    avaliadores[0],
+                    lanches[2], // Monstro
+                    "Pelo nome, achei que era maior. Não parece nada com o da foto.",
+                    3.5F
+                ))
+
+            ret.add(
+                AvaliacaoProduto(4,
                 avaliadores[1],
                 lanches[0],
-                "Estava bom, mas não tanto. Já experimentei melhores.",
-                2.5F)
+                "Melhor lanche da vidaaa.",
+                5F)
             )
 
             ret.add(
-                AvaliacaoProduto(3,
-                avaliadores[1],
-                lanches[1],
-                "Péssimo! Nunca comi um lanche tão ruim quanto esse!!!",
-                0F)
+                AvaliacaoProduto(5,
+                    avaliadores[1],
+                    lanches[1],
+                    "Maravilhoso!",
+                    5F)
+            )
+            ret.add(
+                AvaliacaoProduto(6,
+                    avaliadores[1],
+                    lanches[2],
+                    "Monstruosamente incrível!",
+                    5F)
+            )
+            ret.add(
+                AvaliacaoProduto(7,
+                    avaliadores[2],
+                    lanches[0],
+                    "Perca de tempo... não comprem...",
+                    1F)
+            )
+            ret.add(
+                AvaliacaoProduto(8,
+                    avaliadores[2],
+                    lanches[1],
+                    "Pior lanche da vida... :\\",
+                    0F)
+            )
+            ret.add(
+                AvaliacaoProduto(9,
+                    avaliadores[2],
+                    lanches[2],
+                    "é uma monstruosidade mesmo... mata a fome, mas é de susto...",
+                    2F)
             )
 
             return ret
+        }
+
+        fun getFromRestaurante(restaurante: Restaurante): ArrayList<AvaliacaoProduto> {
+            val avaliacoes = ArrayList<AvaliacaoProduto>()
+            for (avaliacao in getSampleArray())
+                if (avaliacao.lanche.restaurante.id.equals(restaurante.id))
+                    avaliacoes.add(avaliacao)
+            return avaliacoes
         }
 
     }

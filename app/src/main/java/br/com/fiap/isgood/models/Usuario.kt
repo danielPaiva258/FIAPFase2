@@ -37,10 +37,16 @@ open class Usuario(
             ).setPassword("teste123"))
             ret.add(Usuario(
                 2,
-                "Usuario Teste",
+                "Mr. Nice",
                 "teste@teste.com.br",
                 "88034900"
             ).setPassword("12345"))
+            ret.add(Usuario(
+                3,
+                "Chatonildo da Silva",
+                "outro@email.com",
+                "88000900"
+            ).setPassword(""))
             return ret
         }
 

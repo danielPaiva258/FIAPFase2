@@ -8,18 +8,17 @@ import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
 import br.com.fiap.isgood.models.AvaliacaoProduto
-import br.com.fiap.isgood.models.Lanche
 import br.com.fiap.isgood.models.Restaurante
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_produtos_restaurante.*
 import kotlinx.android.synthetic.main.activity_produtos_restaurante.tvNomeLoja
-import kotlinx.android.synthetic.main.activity_restaurante.*
 
 class ProdutosRestauranteActivity : AppCompatActivity() {
 
@@ -36,7 +35,7 @@ class ProdutosRestauranteActivity : AppCompatActivity() {
         var idRestaurante = intent.getIntExtra("idRestaurante",99)
         restaurante = Restaurante.getById(idRestaurante)
         tvNomeLoja.text = restaurante.nome
-        Glide.with(this).load(restaurante.srcImageLogo).into(ivProdutoRestauranteTop)
+        Glide.with(this).load(restaurante.strLogoRestaurante).into(ivProdutoRestauranteTop)
 
         ratingBarProduto = findViewById(R.id.ratingBarProduto);
         ratingBarProduto.rating = restaurante.rating.toFloat();
@@ -66,7 +65,8 @@ class ProdutosRestauranteActivity : AppCompatActivity() {
         listAvaliacoes.add(avaliacao1);
         listAvaliacoes.add(avaliacao2);
         listAvaliacoes.add(avaliacao3);*/
-        val listAvaliacoes = AvaliacaoProduto.getSampleArray()
+        //val listAvaliacoes = AvaliacaoProduto.getSampleArray()
+        val listAvaliacoes = AvaliacaoProduto.getFromRestaurante(restaurante)
 
         val adapter = ListAvaliacaoProdutoAdapter(listAvaliacoes);
         recyclerView.adapter = adapter;
@@ -78,13 +78,17 @@ class ProdutosRestauranteActivity : AppCompatActivity() {
         RecyclerView.Adapter<ListAvaliacaoProdutoAdapter.ViewHolder>() {
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val nome:TextView;
-            val nota:RatingBar;
-            val comentario:TextView;
+            val nome:TextView
+            val nota:RatingBar
+            val comentario:TextView
+            val lancheNome:TextView
+            val lancheImagem : ImageView
             init {
-                nome = view.findViewById(R.id.textViewNomeComentario);
-                nota = view.findViewById(R.id.ratingBarAvaliacaoProduto);
-                comentario = view.findViewById(R.id.textViewComentario);
+                nome = view.findViewById(R.id.textViewNomeComentario)
+                nota = view.findViewById(R.id.ratingBarAvaliacaoProduto)
+                comentario = view.findViewById(R.id.textViewComentario)
+                lancheNome = view.findViewById(R.id.txtNomeLancheComentario)
+                lancheImagem = view.findViewById(R.id.ivLancheComentario)
             }
         }
 
@@ -95,9 +99,11 @@ class ProdutosRestauranteActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-            viewHolder.nome.text = dataSet[position].usuarioAvaliador.name;
-            viewHolder.nota.rating = dataSet[position].nota;
-            viewHolder.comentario.text = dataSet[position].comentario;
+            viewHolder.nome.text = dataSet[position].usuarioAvaliador.name
+            viewHolder.nota.rating = dataSet[position].nota
+            viewHolder.comentario.text = dataSet[position].comentario
+            viewHolder.lancheNome.text = dataSet[position].lanche.nome
+            Glide.with(viewHolder.lancheImagem.context).load(dataSet[position].lanche.strFotoLanche).into(viewHolder.lancheImagem)
         }
 
         override fun getItemCount() = dataSet.size

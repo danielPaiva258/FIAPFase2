@@ -39,35 +39,14 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:layout_margin="20dp">
-            <ImageView
-                android:id="@+id/ivAvEstrela01"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:src="@drawable/img_vector_star_yellow" />
-            <ImageView
-                android:id="@+id/ivAvEstrela02"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:src="@drawable/img_vector_star_yellow"  />
-            <ImageView
-                android:id="@+id/ivAvEstrela03"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:src="@drawable/img_vector_star_yellow" />
-            <ImageView
-                android:id="@+id/ivAvEstrela04"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:src="@drawable/img_vector_star_gray" />
-            <ImageView
-                android:id="@+id/ivAvEstrela05"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:src="@drawable/img_vector_star_gray" />
-            <Space
+
+            <RatingBar
+                android:id="@+id/ratingBarRestaurante"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:importantForAutofill="auto" />
+                android:isIndicator="true"
+                android:numStars="5"/>
+
             <TextView
                 android:id="@+id/tvVerCardapio"
                 android:layout_width="fill_parent"
@@ -83,29 +62,27 @@
         <LinearLayout
             android:id="@+id/llAddress"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:outlineAmbientShadowColor="@color/black"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tvEndereco"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:maxWidth="200dp"
+                android:id="@+id/tvApresentacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/exemplo_endereco_loja"
                 android:textSize="18dp"
                 android:textColor="@color/black" />
 
-            <androidx.fragment.app.FragmentContainerView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/mapView"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".fragments.RestauranteLocalizacaoFragment"
-                />
+                android:layout_height="400dp"
+                tools:context=".MapsActivity"
+                android:id="@+id/mapRestaurante"
+                android:layout_margin="10dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment" />
 
         </LinearLayout>
         <LinearLayout
@@ -159,7 +136,6 @@
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/navigationView"
         app:headerLayout="@layout/menu_lateral_header"
         app:menu="@menu/main_menu"
         android:fitsSystemWindows="true"

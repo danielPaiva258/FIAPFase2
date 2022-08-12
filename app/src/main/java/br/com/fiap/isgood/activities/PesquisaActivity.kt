@@ -24,7 +24,6 @@ class PesquisaActivity : BaseDrawerActivity() {
     lateinit  var tabLayout:TabLayout;
     lateinit  var viewPager2: ViewPager2;
     lateinit  var searchView: SearchView;
-    lateinit var usuario: Usuario
     val tabs = arrayListOf<String>("Restaurantes","Lanches");
 
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
@@ -20,7 +21,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_produtos_restaurante.*
 import kotlinx.android.synthetic.main.activity_produtos_restaurante.tvNomeLoja
 
-class ProdutosRestauranteActivity : AppCompatActivity() {
+class ProdutosRestauranteActivity : BaseDrawerActivity() {
 
     lateinit var ratingBarProduto:RatingBar;
     lateinit var textViewIrLoja:TextView;
@@ -30,7 +31,7 @@ class ProdutosRestauranteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_produtos_restaurante)
+        setOriginalContentView(R.layout.activity_produtos_restaurante);
 
         var idRestaurante = intent.getIntExtra("idRestaurante",99)
         restaurante = Restaurante.getById(idRestaurante)

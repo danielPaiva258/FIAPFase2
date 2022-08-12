@@ -47,6 +47,12 @@ open class Usuario(
                 "outro@email.com",
                 "88000900"
             ).setPassword(""))
+            ret.add(Usuario(
+                4,
+                "1234",
+                "1234",
+                "88034460"
+            ).setPassword("1234"))
             return ret
         }
 

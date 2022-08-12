@@ -12,6 +12,7 @@ import br.com.fiap.isgood.R
 import br.com.fiap.isgood.activities.ProdutosRestauranteActivity
 import br.com.fiap.isgood.adapters.ListRestauranteAdapter
 import br.com.fiap.isgood.models.Restaurante
+import br.com.fiap.isgood.models.Usuario
 
 class RestauranteFragment: Fragment (){
 
@@ -46,9 +47,11 @@ class RestauranteFragment: Fragment (){
         val listRestaurantes = Restaurante.getSampleArray()
 
         val adapter = ListRestauranteAdapter(listRestaurantes, ListRestauranteAdapter.OnClickListener{
-            val intent = Intent(activity, ProdutosRestauranteActivity::class.java)
-            intent.putExtra("idRestaurante", it.id)
-            startActivity(intent)
+            val intentRestaurante = Intent(activity, ProdutosRestauranteActivity::class.java)
+            intentRestaurante.putExtra("idRestaurante", it.id)
+            intentRestaurante.putExtra("idUsuario",
+                activity?.intent?.let { it1 -> Usuario.getById(it1.getIntExtra("idUsuario", 0)).id });
+            startActivity(intentRestaurante)
         });
         recyclerView.adapter = adapter;
     }

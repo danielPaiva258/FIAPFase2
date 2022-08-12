@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import br.com.fiap.isgood.R
+import br.com.fiap.isgood.models.Usuario
 import com.google.android.material.navigation.NavigationView
 
 
@@ -22,6 +23,7 @@ open class BaseDrawerActivity : AppCompatActivity() {
     lateinit  var navView: NavigationView;
     lateinit  var toolbar: Toolbar;
     lateinit  var actionBarToggle: ActionBarDrawerToggle;
+    lateinit  var usuario: Usuario;
     lateinit var originalContentView:FrameLayout;
 
 
@@ -29,6 +31,8 @@ open class BaseDrawerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_drawer)
         originalContentView =  findViewById<FrameLayout>(R.id.originalContentView);
+
+        usuario = Usuario.getById(intent.getIntExtra("idUsuario", 0))
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,21 +65,23 @@ open class BaseDrawerActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.nav_home -> {
                     drawerLayout.closeDrawer(GravityCompat.START);
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    val intentMain = Intent(this, MainActivity::class.java)
+                    intentMain.putExtra("idUsuario", usuario.id);
+                    startActivity(intentMain)
                     true
                 }
                 R.id.nav_busca -> {
                     drawerLayout.closeDrawer(GravityCompat.START);
-                    val intent = Intent(this, PesquisaActivity::class.java)
-                    startActivity(intent)
+                    val intentPesquisa = Intent(this, PesquisaActivity::class.java)
+                    intentPesquisa.putExtra("idUsuario", usuario.id);
+                    startActivity(intentPesquisa)
                     true
                 }
 
                 R.id.nav_logout -> {
                     drawerLayout.closeDrawer(GravityCompat.START);
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
+                    val intentLogout = Intent(this, LoginActivity::class.java)
+                    startActivity(intentLogout)
                     true
                 }
                 else -> false

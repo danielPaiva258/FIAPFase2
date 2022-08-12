@@ -12,7 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import br.com.fiap.isgood.R
+import br.com.fiap.isgood.models.Usuario
 import com.google.android.material.snackbar.Snackbar
+import java.lang.Exception
 
 
 class LoginActivity : AppCompatActivity() {
@@ -30,6 +32,14 @@ class LoginActivity : AppCompatActivity() {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         linearLayoutLoginPrincipal = findViewById(R.id.linearLayoutLoginPrincipal);
+
+        /*
+         * Apenas para facilitar testes no desenvolvimento!!!
+         */
+        findViewById<TextView>(R.id.tvEmail).setOnClickListener{
+            editTextEmail.setText("williandrade@gmail.com")
+            editTextPassword.setText("teste123")
+        }
 
         verificaCadastro(intent.extras);
 
@@ -61,8 +71,16 @@ class LoginActivity : AppCompatActivity() {
     public open fun login(v: View): Unit {
 
         if (!editTextEmail.text.isEmpty() && !editTextPassword.text.isEmpty()) {
-            val intent = Intent(this, PesquisaActivity::class.java)
-            startActivity(intent)
+            try {
+                var usuario = Usuario.getAutenticatedUser(editTextEmail.text.toString(), editTextPassword.text.toString())
+                val intent = Intent(this, PesquisaActivity::class.java)
+                intent.putExtra("idUsuario", usuario.id)
+                startActivity(intent)
+                finish()
+            } catch (e : Exception){
+                Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
+                editTextPassword.setText("")
+            }
         } else {
             Snackbar.make(
                 linearLayoutLoginPrincipal,

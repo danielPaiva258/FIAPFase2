@@ -2,4 +2,8 @@
     <string name="app_name">IsGood</string>
     <string name="menu_close">close</string>
     <string name="menu_open">open</string>
+    <string name="exemplo_NomeLoja">Lancheria Dona Ju</string>
+    <string name="loja_VerCardapio">Ver cardápio...</string>
+    <string name="exemplo_endereco_loja"><![CDATA[Av. Itamarati, 160 - Itacorubi - Florianópolis SC\nCEP 88034-900]]></string>
+    <string name="title_activity_localizacao_loja">LocalizacaoLojaActivity</string>
 </resources>

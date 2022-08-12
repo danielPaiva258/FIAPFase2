@@ -3,19 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="15dp"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:background="@drawable/border">
-    <TextView
-        android:id="@+id/textViewNomeRestaurante"
+    <ImageView
+        android:id="@+id/ivRestauranteMin"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="2dp"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="nome"
-        android:textSize="15dp"/>
-    <TextView
-        android:id="@+id/textViewEnderecoRestaurante"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:text="endereco"
-        android:textSize="15dp"/>
+        android:orientation="vertical"
+        android:padding="15dp">
+        <TextView
+            android:id="@+id/textViewNomeRestaurante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="nome"
+            android:textSize="18dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/textViewEnderecoRestaurante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="endereco"
+            android:textSize="15dp"/>
+
+    </LinearLayout>
 </LinearLayout>

@@ -25,10 +25,10 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="e-mail"
+            android:text="E-mail"
             android:textSize="20dp"
             android:layout_marginTop="50dp"
             android:textAlignment="center"/>
@@ -50,7 +50,7 @@
             android:layout_marginTop="30dp"
             android:textAlignment="center"
             android:textSize="20dp"
-            android:text="senha" />
+            android:text="Senha" />
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -69,8 +69,8 @@
             android:width="200dp"
             android:height="60dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:text="entrar"
+            android:layout_marginTop="60dp"
+            android:text="Entrar"
             android:onClick="login"/>
 
         <TextView

@@ -1,26 +1,20 @@
 package br.com.fiap.isgood.activities
 
 import android.os.Bundle
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import br.com.fiap.isgood.R
 import br.com.fiap.isgood.fragments.tab.LancheFragment
 import br.com.fiap.isgood.fragments.tab.RestauranteFragment
 import br.com.fiap.isgood.models.Usuario
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import java.lang.Exception
 
 
 class PesquisaActivity : BaseDrawerActivity() {
 
-    lateinit  var recyclerView:RecyclerView;
     lateinit  var tabLayout:TabLayout;
     lateinit  var viewPager2: ViewPager2;
     lateinit  var searchView: SearchView;
@@ -30,8 +24,19 @@ class PesquisaActivity : BaseDrawerActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
-        setOriginalContentView(R.layout.activity_pesquisa);
-        searchView = findViewById(R.id.search_bar);
+        setOriginalContentView(br.com.fiap.isgood.R.layout.activity_pesquisa);
+        searchView = findViewById(br.com.fiap.isgood.R.id.search_bar);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,android.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false;
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterRestaurantes(newText);
+                return true;
+            }
+        })
         try {
             usuario = Usuario.getById(intent.getIntExtra("idUsuario", 0))
         } catch (e : Exception){
@@ -41,9 +46,28 @@ class PesquisaActivity : BaseDrawerActivity() {
         Toast.makeText(applicationContext, "Bem vindo ${usuario.name}!", Toast.LENGTH_SHORT).show()
     }
 
+    private fun filterRestaurantes(text: String?) {
+
+       var frag: Fragment? = supportFragmentManager.findFragmentByTag("f"
+                + 0);
+
+        if (frag != null) {
+            var restauranteFragment:RestauranteFragment = frag as RestauranteFragment
+            text?.let { restauranteFragment.filterRestaurantes(it) };
+        }
+
+        frag = supportFragmentManager.findFragmentByTag("f"
+        + 1);
+
+        if (frag != null) {
+            var lancheFragment:LancheFragment = frag as LancheFragment
+            text?.let { lancheFragment.filterLanches(it) };
+        }
+    }
+
     private fun configureTabs() {
-        tabLayout = findViewById(R.id.tabLayoutPesquisa);
-        viewPager2 = findViewById(R.id.fragViewPagerPesquisa);
+        tabLayout = findViewById(br.com.fiap.isgood.R.id.tabLayoutPesquisa);
+        viewPager2 = findViewById(br.com.fiap.isgood.R.id.fragViewPagerPesquisa);
         viewPager2.adapter = FragmentViewPageAdapter(this,tabs.size);
 
         TabLayoutMediator (tabLayout,viewPager2,TabLayoutMediator.TabConfigurationStrategy { tab, position ->
@@ -51,7 +75,9 @@ class PesquisaActivity : BaseDrawerActivity() {
         }).attach();
     }
 
-    class FragmentViewPageAdapter (activity: BaseDrawerActivity, private val tabSize: Int) : FragmentStateAdapter (activity) {
+    open class FragmentViewPageAdapter (activity: BaseDrawerActivity, private val tabSize: Int) : FragmentStateAdapter (activity) {
+        var restFrag = RestauranteFragment();
+        var lancheFrag = LancheFragment();
 
         override fun getItemCount(): Int {
             return tabSize;
@@ -60,8 +86,8 @@ class PesquisaActivity : BaseDrawerActivity() {
         override fun createFragment(position: Int): Fragment {
 
             when(position) {
-                0 -> return RestauranteFragment();
-                1 -> return LancheFragment();
+                0 -> return restFrag;
+                1 -> return lancheFrag;
             }
 
             return Fragment();

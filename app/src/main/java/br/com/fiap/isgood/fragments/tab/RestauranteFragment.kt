@@ -14,7 +14,7 @@ import br.com.fiap.isgood.adapters.ListRestauranteAdapter
 import br.com.fiap.isgood.models.Restaurante
 import br.com.fiap.isgood.models.Usuario
 
-class RestauranteFragment: Fragment (){
+class RestauranteFragment: Fragment () {
 
     lateinit  var recyclerView: RecyclerView;
 
@@ -54,5 +54,12 @@ class RestauranteFragment: Fragment (){
             startActivity(intentRestaurante)
         });
         recyclerView.adapter = adapter;
+
+    }
+
+    fun filterRestaurantes (text:String) {
+        var adapter:ListRestauranteAdapter ;
+        adapter= recyclerView.adapter as ListRestauranteAdapter
+        adapter.filter.filter(text);
     }
 }

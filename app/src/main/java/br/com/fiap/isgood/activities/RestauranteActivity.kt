@@ -7,7 +7,10 @@ import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.ConcatAdapter
 import br.com.fiap.isgood.R
+import br.com.fiap.isgood.adapters.ListRestauranteSocialMidiaAdapter
+import br.com.fiap.isgood.databinding.ActivityRestauranteBinding
 import br.com.fiap.isgood.models.Restaurante
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,17 +22,22 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_restaurante.*
+import kotlin.math.log
 
 class RestauranteActivity() : BaseDrawerActivity(), OnMapReadyCallback {
     lateinit var restaurante: Restaurante
     lateinit var mapRestaurante: GoogleMap
-    lateinit var infoMarker : Marker
+    private lateinit var binding: ActivityRestauranteBinding
+
+    private lateinit var socialMidiaAdapter: ListRestauranteSocialMidiaAdapter
 
     val logId = ">>> RestauranteActivity <<<<"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_restaurante)
+        binding = ActivityRestauranteBinding.inflate(layoutInflater)
+        setOriginalContentView(binding.root)
+
         Log.i(logId, "Mostrando restaurante")
         var idRestaurante = intent.getIntExtra("idRestaurante", 99)
         restaurante = Restaurante.getById(idRestaurante)
@@ -41,10 +49,19 @@ class RestauranteActivity() : BaseDrawerActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapRestaurante) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        initRecyclerView()
+
+    }
+
+    private fun initRecyclerView(){
+        Log.i(logId, "Iniciando a lista de mídia social do restaurante. Total de mídias: ${restaurante.socialLinksArrayList.size}")
+        socialMidiaAdapter = ListRestauranteSocialMidiaAdapter()
+        binding.rvRestauranteSocialMidiaList.adapter = ConcatAdapter(socialMidiaAdapter)
+        socialMidiaAdapter.submitList(restaurante.socialLinksArrayList)
+        Log.i(logId, "Foram listados ${binding.rvRestauranteSocialMidiaList.layoutManager?.itemCount}")
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        Log.e("GOOGLE MAP", "Entrou aqui...")
         mapRestaurante =  googleMap
 
         val localRestaurante = LatLng(restaurante.latitude, restaurante.longitude)

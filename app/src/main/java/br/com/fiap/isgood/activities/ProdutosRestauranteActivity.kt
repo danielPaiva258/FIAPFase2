@@ -47,6 +47,7 @@ class ProdutosRestauranteActivity : BaseDrawerActivity() {
         textViewIrLoja.text = underlineString;
         textViewIrLoja.setOnClickListener{
             val intent = Intent(applicationContext, RestauranteActivity::class.java)
+            intent.putExtra("idUsuario", usuario.id)
             intent.putExtra("idRestaurante", restaurante.id)
             startActivity(intent)
         }

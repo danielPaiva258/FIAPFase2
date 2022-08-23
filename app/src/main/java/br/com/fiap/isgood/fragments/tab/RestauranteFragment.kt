@@ -32,7 +32,7 @@ class RestauranteFragment: Fragment () {
         configureRecyclerView();
     }
 
-        private fun configureRecyclerView() {
+    private fun configureRecyclerView() {
         recyclerView.setLayoutManager(LinearLayoutManager(getActivity()))
         /*
         val res1 = Restaurante.getById (1) //nome="rest1", endereco = "end1")

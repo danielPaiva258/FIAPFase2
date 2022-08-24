@@ -2,7 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="#000000">
-
+    android:layout_height="200dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="-13dp"
+        android:contentDescription="Imagem ilustrando um restaurante, com pratos e uma salada"
+        android:src="@drawable/food_image" />
 </LinearLayout>

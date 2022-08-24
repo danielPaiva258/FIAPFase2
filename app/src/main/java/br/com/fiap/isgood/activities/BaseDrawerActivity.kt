@@ -63,13 +63,13 @@ open class BaseDrawerActivity : AppCompatActivity() {
     private fun configurarNavView () {
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.nav_home -> {
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    val intentMain = Intent(this, MainActivity::class.java)
-                    intentMain.putExtra("idUsuario", usuario.id);
-                    startActivity(intentMain)
-                    true
-                }
+//                R.id.nav_home -> {
+//                    drawerLayout.closeDrawer(GravityCompat.START);
+//                    val intentMain = Intent(this, MainActivity::class.java)
+//                    intentMain.putExtra("idUsuario", usuario.id);
+//                    startActivity(intentMain)
+//                    true
+//                }
                 R.id.nav_busca -> {
                     drawerLayout.closeDrawer(GravityCompat.START);
                     val intentPesquisa = Intent(this, PesquisaActivity::class.java)

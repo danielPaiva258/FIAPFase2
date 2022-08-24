@@ -25,7 +25,7 @@ class PesquisaActivity : BaseDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setOriginalContentView(br.com.fiap.isgood.R.layout.activity_pesquisa);
-        searchView = findViewById(br.com.fiap.isgood.R.id.search_bar);
+        searchView = findViewById(br.com.fiap.isgood.R.id.searchBar);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,android.widget.SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {

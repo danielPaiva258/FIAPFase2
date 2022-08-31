@@ -19,8 +19,8 @@
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="250dp"
-            android:minHeight="200dp"
+            android:minWidth="150dp"
+            android:minHeight="100dp"
             android:layout_gravity="center"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -63,24 +63,23 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btLogin"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:width="200dp"
             android:height="60dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:text="Entrar"
-            android:onClick="login"/>
+            android:text="Entrar"/>
 
         <TextView
             android:id="@+id/textViewLoginCriarConta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="criar uma conta"
-            android:textColorLink="@color/black"
-            android:onClick="criarConta"/>
+            android:text="Registre-se aqui."
+            android:layout_marginTop="20dp"
+            android:textColorLink="@color/black" />
 
 
     </LinearLayout>

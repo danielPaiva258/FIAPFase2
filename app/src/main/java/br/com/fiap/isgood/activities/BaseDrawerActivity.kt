@@ -15,6 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import br.com.fiap.isgood.R
 import br.com.fiap.isgood.models.Usuario
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 open class BaseDrawerActivity : AppCompatActivity() {
@@ -32,7 +34,8 @@ open class BaseDrawerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_base_drawer)
         originalContentView =  findViewById<FrameLayout>(R.id.originalContentView);
 
-        usuario = Usuario.getById(intent.getIntExtra("idUsuario", 0))
+        usuario = Usuario.getByEmail(Firebase.auth.currentUser?.email +"")
+        usuario.name = Firebase.auth.currentUser?.displayName+""
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

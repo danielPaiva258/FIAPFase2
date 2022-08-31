@@ -1,11 +1,13 @@
 package br.com.fiap.isgood.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import br.com.fiap.isgood.R
+import com.google.firebase.FirebaseApp
 
 
 class MainActivity : BaseDrawerActivity() {
@@ -18,6 +20,7 @@ class MainActivity : BaseDrawerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setOriginalContentView(R.layout.activity_main);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

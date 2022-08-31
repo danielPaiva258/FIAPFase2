@@ -1,71 +1,97 @@
 package br.com.fiap.isgood.activities
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import br.com.fiap.isgood.R
-import com.google.android.material.snackbar.Snackbar
+import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.ViewModelProvider
+import br.com.fiap.isgood.databinding.ActivityCadastroBinding
+import br.com.fiap.isgood.viewmodel.CadastroActivityViewModel
 
 class CadastroActivity : AppCompatActivity() {
 
-    lateinit var editTextTextEmail: EditText;
-    lateinit var editTextNome: EditText;
-    lateinit var editTextSenha: EditText;
-    lateinit var editTextSenhaConfirmacao: EditText;
-    lateinit var editTextCEP: EditText;
-    lateinit var buttonCadastrar: Button;
+    lateinit var binding : ActivityCadastroBinding
+    lateinit var cadastroModelView: CadastroActivityViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cadastro)
-        editTextTextEmail = findViewById(R.id.editTextTextEmail);
-        editTextNome = findViewById(R.id.editTextNome);
-        editTextSenha = findViewById(R.id.editTextSenha);
-        editTextSenhaConfirmacao = findViewById(R.id.editTextSenhaConfirmacao);
-        editTextCEP = findViewById(R.id.editTextCEP);
-        buttonCadastrar = findViewById(R.id.buttonCadastrar);
-    }
+        binding = ActivityCadastroBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    open fun cadastrar(v: View) {
-        if (editTextTextEmail.text.isNotEmpty() && editTextNome.text.isNotEmpty() && editTextSenha.text.isNotEmpty() && editTextSenhaConfirmacao.text.isNotEmpty() && editTextCEP.text.isNotEmpty()){
-            if (!editTextSenha.text.equals(editTextSenhaConfirmacao.text)){
-                Snackbar.make(
-                    v,
-                    "Conta criada com sucesso",
-                    Snackbar.LENGTH_LONG
-                ).setAction(null) {
-                    val toastTrue =
-                        Toast.makeText(this, "Por favor preencha email e senha", Toast.LENGTH_SHORT)
-                    toastTrue.setGravity(Gravity.TOP, 0, 0)
-                    toastTrue.show()
-                }.show()
+        //Associa a acvityViewModel
+        cadastroModelView = ViewModelProvider
+            .NewInstanceFactory()
+            .create(CadastroActivityViewModel::class.java)
 
-                val intent = Intent(this, LoginActivity::class.java)
-                intent.putExtra("fromCadastro",true);
-                startActivity(intent)
-            }else {
-                showMessage("Senha e confirmação não são iguais",v);
-            }
-        }else {
-            showMessage("Por favor preencha todos os dados",v);
+        //Para facilitar testes:
+        binding.tvEndereceoDeEmail.setOnClickListener {
+            binding.edNome.setText("Willian José de Andrade")
+            binding.edEmail.setText("williandrade@gmail.com")
+            binding.edSenha.setText("teste123")
+            binding.edSenhaConfirma.setText("teste123")
+            binding.edCep.setText("88034460")
+            cadastroModelView.tudoPreenchido.value = true
+
         }
+
+        // Liga os Listerners
+        binding.edEmail.doOnTextChanged { _,_,_,_->
+              cadastroModelView.email.value = binding.edEmail.text.toString()
+        }
+
+        binding.edNome.doOnTextChanged { _,_,_,_->
+            cadastroModelView.nome.value = binding.edNome.text.toString()
+        }
+
+        binding.edSenha.doOnTextChanged { _,_,_,_->
+            cadastroModelView.senha.value = binding.edSenha.text.toString()
+        }
+
+        binding.edSenhaConfirma.doOnTextChanged { _,_,_,_->
+            cadastroModelView.confirmaSenha.value = binding.edSenhaConfirma.text.toString()
+        }
+
+        binding.edCep.doOnTextChanged { _,_,_,_->
+            cadastroModelView.cep.value = binding.edCep.text.toString()
+        }
+
+        binding.btCadastro.setOnClickListener{
+            cadastroModelView.doCadastro()
+        }
+
+        //Reações com os watchers
+        cadastroModelView.senhasConferem.observe(this){
+            binding.tvSenhaConfirma.setBackgroundColor(if (it) Color.WHITE else Color.MAGENTA)
+        }
+
+        cadastroModelView.usuarioCriado.observe(this){
+            if (it) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                this.finish()
+            }
+        }
+
+        cadastroModelView.tudoPreenchido.observe(this){
+            binding.btCadastro.isEnabled = it
+        }
+
+        cadastroModelView.mensagem.observe(this){
+            showMessage(it)
+        }
+
     }
 
-    fun showMessage (texto:String, v: View) {
-        Snackbar.make(
-            v,
-            texto,
-            Snackbar.LENGTH_LONG
-        ).setAction(null) {
-            val toastTrue =
-                Toast.makeText(this, texto, Toast.LENGTH_SHORT)
-            toastTrue.setGravity(Gravity.TOP, 0, 0)
-            toastTrue.show()
-        }.show()
+    fun showMessage (texto:String) {
+        if (texto.isEmpty()) return
+
+        val toast = Toast.makeText(this, texto, Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.TOP, 0, 0)
+        toast.show()
+
     }
 }

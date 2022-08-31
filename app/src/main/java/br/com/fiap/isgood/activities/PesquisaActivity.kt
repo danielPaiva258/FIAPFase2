@@ -6,11 +6,14 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import br.com.fiap.isgood.databinding.ActivityPesquisaBinding
 import br.com.fiap.isgood.fragments.tab.LancheFragment
 import br.com.fiap.isgood.fragments.tab.RestauranteFragment
 import br.com.fiap.isgood.models.Usuario
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class PesquisaActivity : BaseDrawerActivity() {
@@ -20,12 +23,15 @@ class PesquisaActivity : BaseDrawerActivity() {
     lateinit  var searchView: SearchView;
     val tabs = arrayListOf<String>("Restaurantes","Lanches");
 
+    lateinit var binding: ActivityPesquisaBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
-        setOriginalContentView(br.com.fiap.isgood.R.layout.activity_pesquisa);
-        searchView = findViewById(br.com.fiap.isgood.R.id.searchBar);
+        binding = ActivityPesquisaBinding.inflate(layoutInflater)
+        setOriginalContentView(binding.root)
+        //setOriginalContentView(br.com.fiap.isgood.R.layout.activity_pesquisa);
+        searchView = binding.searchBar // findViewById(br.com.fiap.isgood.R.id.searchBar);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,android.widget.SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -38,7 +44,7 @@ class PesquisaActivity : BaseDrawerActivity() {
             }
         })
         try {
-            usuario = Usuario.getById(intent.getIntExtra("idUsuario", 0))
+            usuario = Firebase.auth.currentUser?.email?.let { Usuario.getByEmail(it) } ?: throw Exception("Usuário não encontrado")
         } catch (e : Exception){
             Toast.makeText(applicationContext, e.message + "\nAlgumas operações podem não funcionar corretamente.", Toast.LENGTH_SHORT).show()
         }

@@ -6,103 +6,108 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.CadastroActivity">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="50dp">
+        android:padding="10dp"
+        >
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textSize="20dp"
-            android:text="e-mail" />
+            android:gravity="start"
+            android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/editTextTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginTop="5dp"
-            android:inputType="textEmailAddress" />
+            <TextView
+                android:id="@+id/tvEndereceoDeEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:focusable="false"
+                android:text="Endereço de e-mail"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="nome" />
+            <EditText
+                android:id="@+id/edEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/editTextNome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginTop="5dp"
-            android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/tvNomeCompleto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Nome completo"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="senha" />
+            <EditText
+                android:id="@+id/edNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/editTextSenha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginTop="5dp"
-            android:inputType="textPassword" />
+            <TextView
+                android:id="@+id/tvSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Senha para acesso"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="confirmação" />
+            <EditText
+                android:id="@+id/edSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/editTextSenhaConfirmacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginTop="5dp"
-            android:inputType="textPassword" />
+            <TextView
+                android:id="@+id/tvSenhaConfirma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Confirme sua senha de acesso"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:textSize="20dp"
-            android:layout_height="wrap_content"
-            android:text="CEP" />
+            <EditText
+                android:id="@+id/edSenhaConfirma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/editTextCEP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginTop="5dp"
-            android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/tvCep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="CEP do seu endereço principal"
+                android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/buttonCadastrar"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:minWidth="130dp"
-            android:minHeight="60dp"
-            android:text="cadastrar"
-            android:onClick="cadastrar"/>
+            <EditText
+                android:id="@+id/edCep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:inputType="textPostalAddress" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btCadastro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:minWidth="130dp"
+                android:minHeight="60dp"
+                android:text="Cadastrar" />
+
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

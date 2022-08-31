@@ -1,7 +1,7 @@
 package br.com.fiap.isgood.models
 
 class UsuarioAvaliador(
-    id: Int,
+    id: String,
     name: String,
     email: String,
     cep: String

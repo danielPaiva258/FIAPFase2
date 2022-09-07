@@ -13,7 +13,7 @@ class UsuarioTest {
     @Test
     fun `Should return true if user Willian could authenticate`(){
         authUser = UsuarioDAO.getByEmail("williandrade@gmail.com")
-        LoginDAO.authUserWithEmailAndPassword(Credential("williandrade@gmail.com", "teste123"),Application().applicationContext, remember = false)
+        LoginDAO.signInWithEmailAndPassword(Credential("williandrade@gmail.com", "teste123"),Application().applicationContext, remember = false)
         LoginDAO.autenticado.observeForever {
             assert(true)
         }

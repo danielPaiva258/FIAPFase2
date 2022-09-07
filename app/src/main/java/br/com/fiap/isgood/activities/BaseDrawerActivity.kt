@@ -1,8 +1,8 @@
 package br.com.fiap.isgood.activities
 
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,12 +14,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import br.com.fiap.isgood.R
-import br.com.fiap.isgood.model.Usuario
 import br.com.fiap.isgood.model.dao.LoginDAO
-import br.com.fiap.isgood.model.dao.UsuarioDAO
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 open class BaseDrawerActivity : AppCompatActivity() {
@@ -28,21 +24,12 @@ open class BaseDrawerActivity : AppCompatActivity() {
     lateinit  var navView: NavigationView;
     lateinit  var toolbar: Toolbar;
     lateinit  var actionBarToggle: ActionBarDrawerToggle;
-    lateinit  var usuario: Usuario;
     lateinit var originalContentView:FrameLayout;
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_drawer)
-        originalContentView =  findViewById<FrameLayout>(R.id.originalContentView);
-
-        try {
-            usuario = UsuarioDAO.getByEmail(Firebase.auth.currentUser?.email + "")
-        } catch (e:Exception){
-            Log.e("BaseDrawerActivity.onCreate", e.message.toString())
-            usuario = Usuario("", "Não registrado", Firebase.auth.currentUser?.email.toString(),"")
-        }
+        originalContentView =  findViewById(R.id.originalContentView);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,15 +62,13 @@ open class BaseDrawerActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.nav_home -> {
                     drawerLayout.closeDrawer(GravityCompat.START);
-                    val intentMain = Intent(this, MainActivity::class.java)
-                    intentMain.putExtra("idUsuario", usuario.id);
-                    startActivity(intentMain)
+                    val intentPesquisa = Intent(this, PesquisaActivity::class.java)
+                    startActivity(intentPesquisa)
                     true
                 }
                 R.id.nav_busca -> {
                     drawerLayout.closeDrawer(GravityCompat.START);
                     val intentPesquisa = Intent(this, PesquisaActivity::class.java)
-                    intentPesquisa.putExtra("idUsuario", usuario.id);
                     startActivity(intentPesquisa)
                     true
                 }

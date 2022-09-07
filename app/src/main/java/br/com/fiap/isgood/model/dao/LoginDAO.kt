@@ -113,7 +113,7 @@ object LoginDAO {
 
     }
 
-    fun authUserWithEmailAndPassword(credential: Credential, context: Context, remember : Boolean) {
+    fun signInWithEmailAndPassword(credential: Credential, context: Context, remember : Boolean) {
         autenticando.value = true
         auth.signInWithEmailAndPassword(credential.email, credential.password)
             .addOnSuccessListener {
@@ -139,7 +139,7 @@ object LoginDAO {
         if (email.toString().isNotEmpty() && password.toString().isNotEmpty()) {
             //Faz login pelo usuário e senha gravados
             setMensagem("Lembrei de você!\nAutenticando com usuário salvo.", CustomToast.KIND_INFORMATION)
-            authUserWithEmailAndPassword(Credential(email.toString(), password.toString()), context, false)
+            signInWithEmailAndPassword(Credential(email.toString(), password.toString()), context, false)
         } else {
             Log.i(
                 "LoginDAO.tryLoginWithSharedData",

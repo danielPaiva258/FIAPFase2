@@ -91,6 +91,9 @@ class CadastroActivityViewModel() : ViewModel() {
         // Condições favoráveis para fazer o cadastro
         // Cria usuário no Firebase
         LoginDAO.newUser(Credential(email.value.toString(), senha.value.toString()), username = username, usercep = usercep, context)
+        LoginDAO.criandoUsuario.observeForever{
+            podeCadastrar()
+        }
         podeCadastrar()
 
     }

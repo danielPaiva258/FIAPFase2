@@ -58,7 +58,7 @@ class LoginActivityViewModel() : ViewModel() {
             return
         }
 
-        LoginDAO.authUserWithEmailAndPassword(Credential(email.value.toString(), password.value.toString()), context, remember)
+        LoginDAO.signInWithEmailAndPassword(Credential(email.value.toString(), password.value.toString()), context, remember)
         validaDados()
     }
 

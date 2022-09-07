@@ -1,13 +1,12 @@
 package br.com.fiap.isgood.activities
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import br.com.fiap.isgood.R
-import com.google.firebase.FirebaseApp
+import br.com.fiap.isgood.model.dao.LoginDAO
 
 
 class MainActivity : BaseDrawerActivity() {
@@ -60,6 +59,7 @@ class MainActivity : BaseDrawerActivity() {
                 }
 
                 R.id.nav_logout -> {
+                    LoginDAO.signOut(applicationContext)
                     drawerLayout.closeDrawer(GravityCompat.START);
                     true
                 }

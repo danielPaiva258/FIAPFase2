@@ -6,10 +6,10 @@
         <item android:id="@+id/nav_home" android:title="Home"
             android:icon="@drawable/menu_sanduiche"/>
 
-        <item android:id="@+id/nav_busca" android:title="busca"
+        <item android:id="@+id/nav_busca" android:title="Pesquisar"
         android:icon="@drawable/menu_sanduiche"/>
 
-        <item android:id="@+id/nav_logout" android:title="sair"
+        <item android:id="@+id/nav_logout" android:title="Sair"
         android:icon="@drawable/menu_sanduiche"/>
 
     </group>

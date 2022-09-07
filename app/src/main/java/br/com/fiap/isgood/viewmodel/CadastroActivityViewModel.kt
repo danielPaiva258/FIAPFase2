@@ -1,28 +1,27 @@
 package br.com.fiap.isgood.viewmodel
 
-import android.app.Application
-import android.util.Log
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.fiap.isgood.models.Usuario
-import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import br.com.fiap.isgood.messageTool.mobcomponents.CustomToast
+import br.com.fiap.isgood.model.Credential
+import br.com.fiap.isgood.model.dao.LoginDAO
 
-class CadastroActivityViewModel () : ViewModel() {
+class CadastroActivityViewModel() : ViewModel() {
     val nome = MutableLiveData("")
     val email = MutableLiveData("")
     val senha = MutableLiveData("")
     val confirmaSenha = MutableLiveData("")
     val cep = MutableLiveData("")
+    var kindMensagem = CustomToast.KIND_DEFAULT
     val mensagem = MutableLiveData("")
     val tudoPreenchido = MutableLiveData(false)
     val senhasConferem = MutableLiveData(true)
-    val usuarioCriado = MutableLiveData(false)
-    var criandoUsuario = false
 
     init {
-        nome.observeForever{
+        LoginDAO.statusMessage.value = ""
+
+        nome.observeForever {
             podeCadastrar()
         }
 
@@ -30,29 +29,35 @@ class CadastroActivityViewModel () : ViewModel() {
             podeCadastrar()
         }
 
-        senha.observeForever{
+        senha.observeForever {
             podeCadastrar()
         }
-        confirmaSenha.observeForever{
+        confirmaSenha.observeForever {
             podeCadastrar()
         }
-        cep.observeForever{
+        cep.observeForever {
+            podeCadastrar()
+        }
+
+        LoginDAO.statusMessage.observeForever {
+            kindMensagem = LoginDAO.statusMessageKind.value ?: CustomToast.KIND_DEFAULT
+            mensagem.value = LoginDAO.statusMessage.value
             podeCadastrar()
         }
 
     }
 
-    private fun podeCadastrar() : Boolean{
+    private fun podeCadastrar(): Boolean {
         //Todos os campos com valor
         tudoPreenchido.value = !(
-            email.value.toString() == ""
-            || nome.value.toString() == ""
-            || email.value.toString() == ""
-            || nome.value.toString() == ""
-            || senha.value.toString() == ""
-            || confirmaSenha.value.toString() == ""
-            || cep.value.toString() == ""
-            || criandoUsuario)
+                email.value.toString() == ""
+                        || nome.value.toString() == ""
+                        || email.value.toString() == ""
+                        || nome.value.toString() == ""
+                        || senha.value.toString() == ""
+                        || confirmaSenha.value.toString() == ""
+                        || cep.value.toString() == ""
+                        || LoginDAO.criandoUsuario.value==true)
 
         // Se tiver todos os dados registrados
         senhasConferem.value = senha.value.toString() == confirmaSenha.value.toString()
@@ -60,57 +65,32 @@ class CadastroActivityViewModel () : ViewModel() {
         return (tudoPreenchido.value == true && senhasConferem.value == true)
     }
 
-    fun doCadastro(){
+    fun setMessage(message : String, kind : Int = CustomToast.KIND_DEFAULT){
+        this.kindMensagem = kind
+        mensagem.value = message
+    }
 
-        mensagem.value = "Criando seu registro..."
+    fun doCadastro(username : String, usercep : String, context: Context) {
 
-        if (tudoPreenchido.value == false){
-            mensagem.value = "Preencha todos os dados."
+        setMessage("Criando seu registro...", CustomToast.KIND_INFORMATION)
+
+        if (tudoPreenchido.value == false) {
+            setMessage("Preencha todos os dados.", CustomToast.KIND_ERROR)
             return
         }
         if (senhasConferem.value == false) {
-            mensagem.value = "Senhas não conferem."
+            setMessage("Senhas não conferem.", CustomToast.KIND_WARNING)
             return
         }
 
-        if (criandoUsuario){
-            mensagem.value = "Ainda criando o seu registro, aguarde mais um pouco."
+        if (LoginDAO.criandoUsuario.value==true) {
+            setMessage("Ainda criando o seu registro, aguarde mais um pouco.", CustomToast.KIND_INFORMATION)
             return
         }
 
         // Condições favoráveis para fazer o cadastro
         // Cria usuário no Firebase
-        criandoUsuario = true
-        Firebase.auth.createUserWithEmailAndPassword(email.value.toString(), senha.value.toString())
-            .addOnSuccessListener {
-                val cr = UserProfileChangeRequest.Builder().setDisplayName(nome.value.toString()).build()
-                it.user?.updateProfile(cr)
-
-                //Salvao os dados do usuário no celular, pra facilitar um próximo acesso.
-                Usuario.getSharedPreferencesEditor(context = Application().applicationContext)!!
-                    .putString( Usuario.PREFERENCES_KEY_EMAIL_LOGIN, email.value.toString())
-                    .putString( Usuario.PREFERENCES_KEY_PASSWORD_LOGIN, senha.value.toString())
-                    .apply()
-
-                mensagem.value = "Cadastro realizado com sucesso."
-                usuarioCriado.value = true
-                criandoUsuario = false
-                podeCadastrar()
-            }
-            .addOnFailureListener{
-                if (it.message.equals("The email address is already in use by another account."))
-                    mensagem.value = "Esse e-mail já é registrado para outro usuário."
-                else
-                    mensagem.value = "Falha na criação de usuário. Verifique o log para maiores detalhes."
-                Log.e("CREATING_USER", "Message: ${it.message}")
-                criandoUsuario = false
-                podeCadastrar()
-            }.addOnCanceledListener {
-                mensagem.value = "Criação de usuário cancelada."
-                criandoUsuario = false
-                podeCadastrar()
-            }
-
+        LoginDAO.newUser(Credential(email.value.toString(), senha.value.toString()), username = username, usercep = usercep, context)
         podeCadastrar()
 
     }

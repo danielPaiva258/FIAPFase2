@@ -4,11 +4,11 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import br.com.fiap.isgood.databinding.ActivityCadastroBinding
+import br.com.fiap.isgood.messageTool.mobcomponents.CustomToast
+import br.com.fiap.isgood.model.dao.LoginDAO
 import br.com.fiap.isgood.viewmodel.CadastroActivityViewModel
 
 class CadastroActivity : AppCompatActivity() {
@@ -60,7 +60,7 @@ class CadastroActivity : AppCompatActivity() {
         }
 
         binding.btCadastro.setOnClickListener{
-            cadastroModelView.doCadastro()
+            cadastroModelView.doCadastro(binding.edNome.text.toString(), binding.edCep.text.toString(), applicationContext)
         }
 
         //Reações com os watchers
@@ -68,7 +68,7 @@ class CadastroActivity : AppCompatActivity() {
             binding.tvSenhaConfirma.setBackgroundColor(if (it) Color.WHITE else Color.MAGENTA)
         }
 
-        cadastroModelView.usuarioCriado.observe(this){
+        LoginDAO.autenticado.observe(this){
             if (it) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
@@ -81,17 +81,13 @@ class CadastroActivity : AppCompatActivity() {
         }
 
         cadastroModelView.mensagem.observe(this){
-            showMessage(it)
+            showMessage(it, cadastroModelView.kindMensagem)
         }
 
     }
 
-    fun showMessage (texto:String) {
-        if (texto.isEmpty()) return
-
-        val toast = Toast.makeText(this, texto, Toast.LENGTH_SHORT)
-        toast.setGravity(Gravity.TOP, 0, 0)
-        toast.show()
-
+    fun showMessage (mensagem:String, kind : Int) {
+        if (mensagem.isEmpty()) return
+        CustomToast.showByKind(this, mensagem, kind)
     }
 }

@@ -1,4 +1,7 @@
-package br.com.fiap.isgood.models
+package br.com.fiap.isgood.model
+
+import br.com.fiap.isgood.model.dao.LancheDAO
+import br.com.fiap.isgood.model.dao.UsuarioAvaliadorDAO
 
 data class AvaliacaoProduto (
     val id:Int,
@@ -10,8 +13,8 @@ data class AvaliacaoProduto (
 
     companion object {
         fun getSampleArray() : ArrayList<AvaliacaoProduto>{
-            val avaliadores = UsuarioAvaliador.getSampleArray()
-            val lanches = Lanche.getSampleArray()
+            val avaliadores = UsuarioAvaliadorDAO.getByFilter()
+            val lanches = LancheDAO.getSampleData()
             val ret = ArrayList<AvaliacaoProduto>()
 
             ret.add(

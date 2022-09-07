@@ -2,6 +2,7 @@ package br.com.fiap.isgood.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -13,7 +14,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import br.com.fiap.isgood.R
-import br.com.fiap.isgood.models.Usuario
+import br.com.fiap.isgood.model.Usuario
+import br.com.fiap.isgood.model.dao.LoginDAO
+import br.com.fiap.isgood.model.dao.UsuarioDAO
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -34,8 +37,12 @@ open class BaseDrawerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_base_drawer)
         originalContentView =  findViewById<FrameLayout>(R.id.originalContentView);
 
-        usuario = Usuario.getByEmail(Firebase.auth.currentUser?.email +"")
-        usuario.name = Firebase.auth.currentUser?.displayName+""
+        try {
+            usuario = UsuarioDAO.getByEmail(Firebase.auth.currentUser?.email + "")
+        } catch (e:Exception){
+            Log.e("BaseDrawerActivity.onCreate", e.message.toString())
+            usuario = Usuario("", "Não registrado", Firebase.auth.currentUser?.email.toString(),"")
+        }
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,9 +89,11 @@ open class BaseDrawerActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_logout -> {
+                    LoginDAO.signOut(applicationContext)
                     drawerLayout.closeDrawer(GravityCompat.START);
                     val intentLogout = Intent(this, LoginActivity::class.java)
                     startActivity(intentLogout)
+                    finish()
                     true
                 }
                 else -> false

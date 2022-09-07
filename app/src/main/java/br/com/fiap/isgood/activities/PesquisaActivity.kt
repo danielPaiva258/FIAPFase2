@@ -1,7 +1,6 @@
 package br.com.fiap.isgood.activities
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -9,11 +8,8 @@ import androidx.viewpager2.widget.ViewPager2
 import br.com.fiap.isgood.databinding.ActivityPesquisaBinding
 import br.com.fiap.isgood.fragments.tab.LancheFragment
 import br.com.fiap.isgood.fragments.tab.RestauranteFragment
-import br.com.fiap.isgood.models.Usuario
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
 class PesquisaActivity : BaseDrawerActivity() {
@@ -43,13 +39,7 @@ class PesquisaActivity : BaseDrawerActivity() {
                 return true;
             }
         })
-        try {
-            usuario = Firebase.auth.currentUser?.email?.let { Usuario.getByEmail(it) } ?: throw Exception("Usuário não encontrado")
-        } catch (e : Exception){
-            Toast.makeText(applicationContext, e.message + "\nAlgumas operações podem não funcionar corretamente.", Toast.LENGTH_SHORT).show()
-        }
         configureTabs();
-        Toast.makeText(applicationContext, "Bem vindo ${usuario.name}!", Toast.LENGTH_SHORT).show()
     }
 
     private fun filterRestaurantes(text: String?) {

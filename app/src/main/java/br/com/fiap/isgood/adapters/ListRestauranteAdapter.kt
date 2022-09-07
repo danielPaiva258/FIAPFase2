@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
-import br.com.fiap.isgood.models.Restaurante
+import br.com.fiap.isgood.model.Restaurante
 import com.bumptech.glide.Glide
 import java.util.*
 import kotlin.collections.ArrayList

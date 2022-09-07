@@ -48,7 +48,7 @@ class LoginActivityTest {
         onView(withId(R.id.editTextPassword)).perform(replaceText("teste123"))
 
         pausedLog("Confirmando o login", 500)
-        onView(withId(R.id.button2)).perform(click())
+        onView(withId(R.id.btLogin)).perform(click())
 
         pausedLog("Aguardando 5s para confirmar o login e mostrar a tela", 5000)
 

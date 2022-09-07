@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
-import br.com.fiap.isgood.adapters.ListRestauranteAdapter
-import br.com.fiap.isgood.models.Lanche
+import br.com.fiap.isgood.model.Lanche
+import br.com.fiap.isgood.model.dao.LancheDAO
 import com.bumptech.glide.Glide
 import java.util.*
 import kotlin.collections.ArrayList
@@ -39,15 +39,7 @@ class LancheFragment:Fragment (){
     private fun configureRecyclerView() {
         recyclerView.setLayoutManager(LinearLayoutManager(getActivity()));
 
-        /*val lanche1 = Lanche.getExemple (1) // nome="lanche1", endereco = "lanche1")
-        val lanche2 = Lanche.getExemple (2) // nome="lanche2", endereco = "lanche2")
-        val lanche3 = Lanche.getExemple (3) // nome="lanche3", endereco = "lanche3")
-
-        val listLanches = ArrayList<Lanche>();
-        listLanches.add(lanche1);
-        listLanches.add(lanche2);
-        listLanches.add(lanche3);*/
-        val listLanches = Lanche.getSampleArray()
+        val listLanches = LancheDAO.getSampleData()
 
         val adapter = ListLancheAdapter(listLanches);
         recyclerView.adapter = adapter;

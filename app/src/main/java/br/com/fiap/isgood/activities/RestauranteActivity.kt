@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.ConcatAdapter
 import br.com.fiap.isgood.R
 import br.com.fiap.isgood.adapters.ListRestauranteSocialMidiaAdapter
 import br.com.fiap.isgood.databinding.ActivityRestauranteBinding
-import br.com.fiap.isgood.models.Restaurante
+import br.com.fiap.isgood.model.Restaurante
+import br.com.fiap.isgood.model.dao.RestauranteDAO
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,7 +23,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_restaurante.*
-import kotlin.math.log
 
 class RestauranteActivity() : BaseDrawerActivity(), OnMapReadyCallback {
     lateinit var restaurante: Restaurante
@@ -39,8 +39,8 @@ class RestauranteActivity() : BaseDrawerActivity(), OnMapReadyCallback {
         setOriginalContentView(binding.root)
 
         Log.i(logId, "Mostrando restaurante")
-        var idRestaurante = intent.getIntExtra("idRestaurante", 99)
-        restaurante = Restaurante.getById(idRestaurante)
+        var idRestaurante = intent.getStringExtra("idRestaurante") ?: "99"
+        restaurante = RestauranteDAO.getById(idRestaurante)
         tvNomeLoja.text = restaurante.nome
         tvApresentacao.text = restaurante.apresentacao
         ratingBarRestaurante.rating = restaurante.rating

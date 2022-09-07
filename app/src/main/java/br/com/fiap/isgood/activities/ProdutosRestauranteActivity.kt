@@ -1,7 +1,6 @@
 package br.com.fiap.isgood.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -11,12 +10,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
-import br.com.fiap.isgood.models.AvaliacaoProduto
-import br.com.fiap.isgood.models.Restaurante
+import br.com.fiap.isgood.model.AvaliacaoProduto
+import br.com.fiap.isgood.model.Restaurante
+import br.com.fiap.isgood.model.dao.RestauranteDAO
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_produtos_restaurante.*
 import kotlinx.android.synthetic.main.activity_produtos_restaurante.tvNomeLoja
@@ -33,8 +32,8 @@ class ProdutosRestauranteActivity : BaseDrawerActivity() {
         super.onCreate(savedInstanceState)
         setOriginalContentView(R.layout.activity_produtos_restaurante);
 
-        var idRestaurante = intent.getIntExtra("idRestaurante",99)
-        restaurante = Restaurante.getById(idRestaurante)
+        var idRestaurante = intent.getStringExtra("idRestaurante") ?: "99"
+        restaurante = RestauranteDAO.getById(idRestaurante)
         tvNomeLoja.text = restaurante.nome
         Glide.with(this).load(restaurante.strLogoRestaurante).into(ivProdutoRestauranteTop)
 

@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.databinding.FragmentRestauranteSocialmidiaItemBinding
-import br.com.fiap.isgood.models.Restaurante
+import br.com.fiap.isgood.model.Restaurante
 import com.bumptech.glide.Glide
 import br.com.fiap.isgood.adapters.ListRestauranteSocialMidiaAdapter.*
-import com.google.android.material.snackbar.Snackbar
 
 class ListRestauranteSocialMidiaAdapter :
     ListAdapter<Restaurante.SocialLinks, ListRestauranteSocialMidiaViewHolder>(DIFF_CALLBACK){

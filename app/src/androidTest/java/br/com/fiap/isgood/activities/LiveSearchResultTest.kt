@@ -12,7 +12,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import br.com.fiap.isgood.R
-import br.com.fiap.isgood.models.Restaurante
+import br.com.fiap.isgood.model.Restaurante
+import br.com.fiap.isgood.model.dao.RestauranteDAO
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,15 +32,15 @@ class LiveSearchResultTest {
 
         pausedLog("Fazendo o login", 500)
 
-        onView(ViewMatchers.withId(R.id.editTextEmail))
-            .perform(ViewActions.replaceText("williandrade@gmail.com"))
+        onView(withId(R.id.editTextEmail))
+            .perform(replaceText("williandrade@gmail.com"))
 
         pausedLog("Preenchendo a senha", 500)
-        onView(ViewMatchers.withId(R.id.editTextPassword))
+        onView(withId(R.id.editTextPassword))
             .perform(replaceText("teste123"))
 
         pausedLog("Confirmando o login", 500)
-        onView(withId(R.id.button2)).perform(click())
+        onView(withId(R.id.btLogin)).perform(click())
 
         pausedLog("Aguardando 5s para confirmar o login e mostrar a tela de pesquisa", 5000)
 
@@ -52,7 +53,7 @@ class LiveSearchResultTest {
         pausedLog("Aguarda execução da pesquisa para confirmar")
 
         onView(withId(R.id.textViewNomeRestaurante))
-            .check(matches(withText(Restaurante.getSampleArray()[2].nome)))
+            .check(matches(withText(RestauranteDAO.getSampleData()[2].nome)))
 
     }
 

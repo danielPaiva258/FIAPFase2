@@ -11,7 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
 import br.com.fiap.isgood.activities.ProdutosRestauranteActivity
 import br.com.fiap.isgood.adapters.ListRestauranteAdapter
+import br.com.fiap.isgood.apis.IsGoodApis
+import br.com.fiap.isgood.config.RetrofitInstaceFactory
 import br.com.fiap.isgood.model.dao.RestauranteDAO
+import br.com.fiap.isgood.model.dto.EmpresasDTO
+import br.com.fiap.isgood.utils.RestauranteUtils
+import retrofit2.Call
+import retrofit2.Response
 
 class RestauranteFragment: Fragment () {
 
@@ -32,16 +38,28 @@ class RestauranteFragment: Fragment () {
     }
 
     private fun configureRecyclerView() {
-        recyclerView.setLayoutManager(LinearLayoutManager(getActivity()))
-        val listRestaurantes = RestauranteDAO.getSampleData()
-
-        val adapter = ListRestauranteAdapter(listRestaurantes, ListRestauranteAdapter.OnClickListener{
-            val intentRestaurante = Intent(activity, ProdutosRestauranteActivity::class.java)
-            intentRestaurante.putExtra("idRestaurante", it.id)
-            startActivity(intentRestaurante)
-        });
-        recyclerView.adapter = adapter;
-
+        recyclerView.setLayoutManager(LinearLayoutManager(getActivity()));
+        var empresaDTOlist:List<EmpresasDTO> = ArrayList<EmpresasDTO>();
+        val retrofitClient = RetrofitInstaceFactory.getRetrofitInstance(getString(R.string.base_url));
+        val apis = retrofitClient.create(IsGoodApis::class.java);
+        val response: Response<List<EmpresasDTO>>;
+        apis.getEmpresas().enqueue(object : retrofit2.Callback<List<EmpresasDTO>> {
+            override fun onResponse(call: Call<List<EmpresasDTO>>, response: Response<List<EmpresasDTO>>) {
+                empresaDTOlist = response.body()!!;
+                val listRestaurantes =
+                    RestauranteUtils.convertEmpresasDtoTORestaurantes(empresaDTOlist);
+                RestauranteDAO.restaurantes = listRestaurantes;
+                val adapter = ListRestauranteAdapter(listRestaurantes, ListRestauranteAdapter.OnClickListener{
+                    val intentRestaurante = Intent(activity, ProdutosRestauranteActivity::class.java)
+                    intentRestaurante.putExtra("idRestaurante", it.id)
+                    startActivity(intentRestaurante)
+                });
+                recyclerView.adapter = adapter;
+            }
+            override fun onFailure(call: Call<List<EmpresasDTO>>, t: Throwable) {
+                println("Erro ao consultar empresas")
+            }
+        })
     }
 
     fun filterRestaurantes (text:String) {

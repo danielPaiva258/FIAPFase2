@@ -1,5 +1,6 @@
 package br.com.fiap.isgood.fragments.tab
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.isgood.R
+import br.com.fiap.isgood.activities.ProdutosRestauranteActivity
+import br.com.fiap.isgood.adapters.ListRestauranteAdapter
+import br.com.fiap.isgood.apis.IsGoodApis
+import br.com.fiap.isgood.config.RetrofitInstaceFactory
 import br.com.fiap.isgood.model.Lanche
 import br.com.fiap.isgood.model.dao.LancheDAO
+import br.com.fiap.isgood.model.dao.RestauranteDAO
+import br.com.fiap.isgood.model.dto.EmpresasDTO
+import br.com.fiap.isgood.model.dto.LancheDTO
+import br.com.fiap.isgood.utils.LancheUtils
+import br.com.fiap.isgood.utils.RestauranteUtils
 import com.bumptech.glide.Glide
+import retrofit2.Call
+import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,11 +50,23 @@ class LancheFragment:Fragment (){
 
     private fun configureRecyclerView() {
         recyclerView.setLayoutManager(LinearLayoutManager(getActivity()));
-
-        val listLanches = LancheDAO.getSampleData()
-
-        val adapter = ListLancheAdapter(listLanches);
-        recyclerView.adapter = adapter;
+        var lancheDTOList:List<LancheDTO> = ArrayList<LancheDTO>();
+        val retrofitClient = RetrofitInstaceFactory.getRetrofitInstance(getString(R.string.base_url))
+        val apis = retrofitClient.create(IsGoodApis::class.java)
+        val response: Response<List<LancheDTO>>;
+        apis.getLanches().enqueue(object : retrofit2.Callback<List<LancheDTO>> {
+            override fun onResponse(call: Call<List<LancheDTO>>, response: Response<List<LancheDTO>>) {
+                lancheDTOList = response.body()!!;
+                val listLanches =
+                    LancheUtils.convertLanchesDtoTOLanches(lancheDTOList);
+                LancheDAO.defaultList = listLanches;
+                val adapter = ListLancheAdapter(listLanches);
+                recyclerView.adapter = adapter;
+            }
+            override fun onFailure(call: Call<List<LancheDTO>>, t: Throwable) {
+                println("Erro ao consultar produtos")
+            }
+        })
     }
 
     fun filterLanches (text:String) {

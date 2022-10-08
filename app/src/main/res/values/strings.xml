@@ -6,4 +6,5 @@
     <string name="loja_VerCardapio">Ver cardápio...</string>
     <string name="exemplo_endereco_loja"><![CDATA[Av. Itamarati, 160 - Itacorubi - Florianópolis SC\nCEP 88034-900]]></string>
     <string name="title_activity_localizacao_loja">LocalizacaoLojaActivity</string>
+    <string name="base_url" >http://10.0.2.2:8080/</string>
 </resources>

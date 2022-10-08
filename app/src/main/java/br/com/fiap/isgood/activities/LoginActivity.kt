@@ -8,10 +8,17 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
+import br.com.fiap.isgood.apis.IsGoodApis
+import br.com.fiap.isgood.config.RetrofitInstaceFactory
 import br.com.fiap.isgood.databinding.ActivityLoginBinding
 import br.com.fiap.isgood.messageTool.mobcomponents.CustomToast
 import br.com.fiap.isgood.model.dao.LoginDAO
+import br.com.fiap.isgood.model.dto.EmpresasDTO
 import br.com.fiap.isgood.viewmodel.LoginActivityViewModel
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import retrofit2.Call
+import retrofit2.Response
 
 
 class LoginActivity : AppCompatActivity() {
@@ -21,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        getEmpresas();
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -102,6 +110,24 @@ class LoginActivity : AppCompatActivity() {
 
         CustomToast.showByKind(this, mensagem, kind)
 
+    }
+
+    fun getEmpresas(){
+        val retrofitClient = RetrofitInstaceFactory.getRetrofitInstance("http://10.0.2.2:8080/")
+        val apis = retrofitClient.create(IsGoodApis::class.java)
+
+        apis.getEmpresas().enqueue(object : retrofit2.Callback<List<EmpresasDTO>> {
+            override fun onResponse(call: Call<List<EmpresasDTO>>, response: Response<List<EmpresasDTO>>) {
+                val responseString: String? = response.body().toString();
+                val empresaDTOlist: List<EmpresasDTO>? = response.body();
+                println(responseString);
+            }
+
+            override fun onFailure(call: Call<List<EmpresasDTO>>, t: Throwable) {
+                println("Não foi")
+            }
+
+        })
     }
 
 }

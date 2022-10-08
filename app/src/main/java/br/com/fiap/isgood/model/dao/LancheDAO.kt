@@ -18,7 +18,6 @@ object LancheDAO : GenericDAO<Lanche, String>() {
     override fun update(obj: Lanche): Lanche {
         defaultList.remove(getById(obj.id))
         return add(obj)
-
     }
 
     override fun getSampleData(): ArrayList<Lanche> {

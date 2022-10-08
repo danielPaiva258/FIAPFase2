@@ -3,7 +3,7 @@ package br.com.fiap.isgood.model.dao
 import br.com.fiap.isgood.model.Usuario
 
 abstract class GenericDAO <DataModel, IdType>{
-    val defaultList = ArrayList<DataModel>()
+    var defaultList = ArrayList<DataModel>()
 
     fun add(obj : DataModel) : DataModel{
         defaultList.add(obj)
